@@ -1,0 +1,226 @@
+{
+	"info": {
+		"_postman_id": "16fd61f1-ab8c-494a-9189-6b05050ff13a",
+		"name": "Jobs API",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "25700856"
+	},
+	"item": [
+		{
+			"name": "Auth",
+			"item": [
+				{
+					"name": "register",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"name\": \"maks1\",\n    \"password\": \"Test123\"\n} ",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{URL}}/auth/register",
+							"host": [
+								"{{URL}}"
+							],
+							"path": [
+								"auth",
+								"register"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "login",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"const jsonData = pm.response.json()",
+									"pm.globals.set(\"accessToken\", jsonData.token);"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"email\": \"test@gmail.com\",\n    \"password\": \"Test123\"\n\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{URL}}/auth/login",
+							"host": [
+								"{{URL}}"
+							],
+							"path": [
+								"auth",
+								"login"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Job",
+			"item": [
+				{
+					"name": "jobs",
+					"request": {
+						"method": "GET",
+						"header": []
+					},
+					"response": []
+				},
+				{
+					"name": "jobs",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY0NmI1YTQ5MzZjMGQ2MDdmYjVjYTliZSIsIm5hbWUiOiJtYWtzIiwiaWF0IjoxNjg0NzU5ODgzLCJleHAiOjE2ODczNTE4ODN9._0jbVYKdqXplA7LP3WAYPpRiN8Dh-c-sJJ59_r-Op-0",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"company\": \"traffic devils\",\n    \"position\": \"middle\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{URL}}/jobs",
+							"host": [
+								"{{URL}}"
+							],
+							"path": [
+								"jobs"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "jobs:id",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{accessToken}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY0NmI4MGFhZmFmMGIyMjQyYTJhYjUzOCIsIm5hbWUiOiJtYWtzMSIsImlhdCI6MTY4NDc2Njg5MCwiZXhwIjoxNjg3MzU4ODkwfQ.RyM_LINPPlQOHIx2ahdV4Xb_5QY-ExZQjNlQOLnsUXA",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "{{URL}}/jobs/646b88b0cb76805affccf45f",
+							"host": [
+								"{{URL}}"
+							],
+							"path": [
+								"jobs",
+								"646b88b0cb76805affccf45f"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "jobs:id",
+					"request": {
+						"method": "PATCH",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY0NmI1YTQ5MzZjMGQ2MDdmYjVjYTliZSIsIm5hbWUiOiJtYWtzIiwiaWF0IjoxNjg0NzU5ODgzLCJleHAiOjE2ODczNTE4ODN9._0jbVYKdqXplA7LP3WAYPpRiN8Dh-c-sJJ59_r-Op-0",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{URL}}/jobs/646b7d40f7d17c91e8979137",
+							"host": [
+								"{{URL}}"
+							],
+							"path": [
+								"jobs",
+								"646b7d40f7d17c91e8979137"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "jobs:id",
+					"request": {
+						"method": "PATCH",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY0NmI1YTQ5MzZjMGQ2MDdmYjVjYTliZSIsIm5hbWUiOiJtYWtzIiwiaWF0IjoxNjg0NzU5ODgzLCJleHAiOjE2ODczNTE4ODN9._0jbVYKdqXplA7LP3WAYPpRiN8Dh-c-sJJ59_r-Op-0",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{URL}}/jobs/646b7d40f7d17c91e8979137",
+							"host": [
+								"{{URL}}"
+							],
+							"path": [
+								"jobs",
+								"646b7d40f7d17c91e8979137"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		}
+	]
+}
