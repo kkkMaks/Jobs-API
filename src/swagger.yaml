@@ -135,11 +135,18 @@ paths:
       requestBody:
         description: ""
         content:
-          text/plain:
+          application/json:
             schema:
-              type: object
-              example: {}
-            example: {}
+              allOf:
+                - $ref: "#/components/schemas/jobsrequest"
+                - example:
+                    company: Google
+                    position: middl1e
+                    status: interview
+            example:
+              company: Google
+              position: middl1e
+              status: interview
         required: true
       responses:
         "200":

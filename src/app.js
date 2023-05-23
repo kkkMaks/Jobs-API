@@ -1,5 +1,6 @@
 require("dotenv").config();
 require("express-async-errors");
+const path = require("path");
 
 // security packages
 const helmet = require("helmet");
@@ -10,6 +11,8 @@ const rateLimiter = require("express-rate-limit");
 // Swagger
 const swaggerUI = require("swagger-ui-express");
 const YAML = require("yamljs");
+console.log(__dirname);
+
 const swaggerDocument = YAML.load("./src/swagger.yaml");
 
 const express = require("express");

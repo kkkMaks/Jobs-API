@@ -41,7 +41,9 @@ const updateJob = async (req, res) => {
   const { company, position, status } = req.body;
 
   if (!company && !position && !status) {
-    throw new BadRequestError("Please provide at least one field to update");
+    throw new BadRequestError(
+      "Please provide at least one field to update (company, position, status)"
+    );
   }
 
   const job = await Job.findOneAndUpdate(

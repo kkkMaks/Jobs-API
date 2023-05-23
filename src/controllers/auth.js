@@ -1,5 +1,5 @@
 const { StatusCodes } = require("http-status-codes");
-const jwt = require("jsonwebtoken");
+const { UnauthenticatedError } = require("../errors");
 
 const User = require("../models/User");
 
@@ -17,7 +17,7 @@ const login = async (req, res) => {
 
   const isPasswordCorrect = await user.comparePassword(password);
   if (!isPasswordCorrect) {
-    throw new UnauthenticatedError("Invalid password credentials");
+    throw new UnauthenticatedError("Invalid credentials");
   }
 
   const token = user.createJWT();
