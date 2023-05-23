@@ -10,9 +10,14 @@ const UserSchema = new mongoose.Schema({
     type: String,
     required: [true, "Please provide a name"],
     minlength: 2,
-    maxlength: 50,
+    maxlength: 30,
   },
-
+  lastName: {
+    type: String,
+    trim: true,
+    maxlength: 50,
+    default: "change me",
+  },
   email: {
     type: String,
     required: [true, "Please provide an email"],
@@ -23,16 +28,22 @@ const UserSchema = new mongoose.Schema({
     },
     unique: true,
   },
+  location: {
+    type: String,
+    trim: true,
+    maxlength: 30,
+    default: "change me",
+  },
 
   password: {
     type: String,
     required: [true, "Please provide a password"],
     minlength: 6,
-    // regular expression where need to have at least one uppercase, one lowercase, one digit
   },
 });
 
 UserSchema.pre("save", async function () {
+  if (!this.isModified("password")) return;
   const salt = await bcrypt.genSalt(10);
   this.password = await bcrypt.hash(this.password, salt);
 });

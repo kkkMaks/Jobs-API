@@ -6,14 +6,12 @@ const path = require("path");
 const helmet = require("helmet");
 const cors = require("cors");
 const xss = require("xss-clean");
-const rateLimiter = require("express-rate-limit");
 
 // Swagger
 const swaggerUI = require("swagger-ui-express");
 const YAML = require("yamljs");
-console.log(__dirname);
 
-const swaggerDocument = YAML.load("./src/swagger.yaml");
+const swaggerDocument = YAML.load("./src/docs/swagger.yaml");
 
 const express = require("express");
 const connectDB = require("./db/connect");
@@ -26,25 +24,20 @@ const jobsRouter = require("./routes/jobs");
 
 const app = express();
 
-app.set("trust proxy", 1);
-app.use(
-  rateLimiter({
-    windowMs: 15 * 60 * 1000,
-    max: 100,
-  })
-);
+app.use(express.static(path.resolve(__dirname, "./client/build")));
 app.use(express.json());
 app.use(helmet());
 app.use(cors());
 app.use(xss());
 
-app.get("/", (req, res) => {
-  res.send("<h1> Job API </h1> <a href='/api-docs'> Documentation </a>");
-});
-app.use("/api-docs", swaggerUI.serve, swaggerUI.setup(swaggerDocument));
-
+app.use("/api/v1/docs", swaggerUI.serve, swaggerUI.setup(swaggerDocument));
 app.use("/api/v1/auth", authRouter);
 app.use("/api/v1/jobs", authenticateUser, jobsRouter);
+
+// serve index.html from client/build
+app.get("*", (req, res) => {
+  res.sendFile(path.resolve(__dirname, "./client/build", "index.html"));
+});
 
 app.use(notFoundMiddleware);
 app.use(errorHandlerMiddleware);

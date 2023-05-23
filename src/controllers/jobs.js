@@ -20,10 +20,10 @@ const getJob = async (req, res) => {
 };
 
 const createJob = async (req, res) => {
-  const { company, position, status } = req.body;
+  const { company, position, status, jobLocation, jobType } = req.body;
   const userId = req.user.id;
 
-  if (!company || !position || !userId) {
+  if (!company || !position || !userId || !jobLocation || !jobType) {
     throw new BadRequestError("Please provide all required fields");
   }
 
@@ -31,6 +31,8 @@ const createJob = async (req, res) => {
     company,
     position,
     status,
+    jobLocation,
+    jobType,
     createdBy: userId,
   });
 
@@ -38,17 +40,17 @@ const createJob = async (req, res) => {
 };
 
 const updateJob = async (req, res) => {
-  const { company, position, status } = req.body;
+  const { company, position, status, jobLocation, jobType } = req.body;
 
-  if (!company && !position && !status) {
+  if (!company && !position && !status && !jobLocation && !jobType) {
     throw new BadRequestError(
-      "Please provide at least one field to update (company, position, status)"
+      "Please provide at least one field to update (company, position, status, jobLocation, jobType)"
     );
   }
 
   const job = await Job.findOneAndUpdate(
     { _id: req.params.id, createdBy: req.user.id },
-    { company, position, status },
+    { company, position, status, jobLocation, jobType },
     { new: true, runValidators: true }
   );
 
