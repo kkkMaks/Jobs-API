@@ -12,14 +12,17 @@ const isAuthencticated = async (req, res, next) => {
   const token = authHeader.split(" ")[1];
 
   try {
-    const user = await User.findOne({
-      _id: jwt.verify(token, process.env.JWT_SECRET).id,
-    }).select("-password -__v");
+    const payload = jwt.verify(token, process.env.JWT_SECRET);
+    const user = await User.findOne({ _id: payload.id }).select(
+      "-password -__v"
+    );
+
+    const testUser = payload.id === "646c87519f39c5d1402c936f";
 
     if (!user) {
       throw new UnauthenticatedError("Authentication invalid");
     }
-    req.user = user;
+    req.user = { user, testUser };
 
     next();
   } catch (error) {

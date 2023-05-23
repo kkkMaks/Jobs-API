@@ -40,8 +40,12 @@ const updateUser = async (req, res) => {
     throw new BadRequestError("Please provide all fields");
   }
 
+  if (req.user.testUser) {
+    throw new BadRequestError("Read-only for demo user");
+  }
+
   const user = await User.findByIdAndUpdate(
-    req.user._id,
+    req.user.user._id,
     { name, lastName, email, location },
     { new: true }
   );
