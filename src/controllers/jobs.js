@@ -3,7 +3,24 @@ const { BadRequestError } = require("../errors");
 const Job = require("../models/Job");
 
 const getAllJobs = async (req, res) => {
-  const jobs = await Job.find({ createdBy: req.user.id }).sort("-createdAt");
+  const { search, status, jobType, sort } = req.query;
+
+  const queryObject = {
+    createdBy: req.user.id,
+  };
+
+  if (search) queryObject.position = { $regex: search, $options: "i" };
+  if (status && status !== "all") queryObject.status = status;
+  if (jobType && jobType !== "all") queryObject.jobType = jobType;
+
+  let result = Job.find(queryObject);
+
+  if (sort === "latest") result = result.sort("-createdAt");
+  if (sort === "oldest") result = result.sort("createdAt");
+  if (sort === "a-z") result = result.sort("position");
+  if (sort === "z-a") result = result.sort("-position");
+
+  const jobs = await result;
 
   return res.status(200).json({ jobs });
 };
