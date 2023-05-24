@@ -22,7 +22,8 @@ const isAuthencticated = async (req, res, next) => {
     if (!user) {
       throw new UnauthenticatedError("Authentication invalid");
     }
-    req.user = { user, testUser };
+    req.user = user;
+    req.testUser = testUser;
 
     next();
   } catch (error) {
