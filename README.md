@@ -4,13 +4,12 @@
 
 Jobster is a job application tracker that allows users to keep track of their job applications. Users can create, update, and delete job listings. They can also update the status of their job applications.
 
-(!NOTE) First request to the site may take a while to load as the server is hosted on a free tier of Render.
-You can check out the live demo here [https://jobs-api-y1nf.onrender.com/](https://jobs-api-y1nf.onrender.com/)
+You can check out the live demo here [https://jobster-zj5wu.ondigitalocean.app](https://jobster-zj5wu.ondigitalocean.app)
 
 ## API Documentation
 
 For more details on the API endpoints and their usage, refer to the API documentation.
-Documentation: [https://jobs-api-y1nf.onrender.com/api/v1/docs/](https://jobs-api-y1nf.onrender.com/api/v1/docs/)
+Documentation: [https://jobster-zj5wu.ondigitalocean.app/api/v1/docs/](https://jobster-zj5wu.ondigitalocean.app/api/v1/docs/)
 
 ## Endpoints
 
