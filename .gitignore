@@ -1,2 +1,4 @@
 .env
 node_modules
+MOCK_DATA.json
+Jobs API.postman_collection.json

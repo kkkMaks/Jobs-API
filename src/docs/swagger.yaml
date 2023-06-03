@@ -1,177 +1,207 @@
 openapi: 3.0.0
 info:
-  title: Jobs API
+  title: Joblog API
   contact: {}
   version: "1.0"
 servers:
-  - url: https://jobs-api-y1nf.onrender.com/api/v1
+  - url: https://joblog-zclzm.ondigitalocean.app/api/v1
     variables: {}
 paths:
   /auth/register:
     post:
       tags:
         - Auth
-      summary: register
-      operationId: register
-      parameters: []
+      summary: User Registration
+      operationId: Register
+      description: Creates a new user account.
       requestBody:
-        description: ""
+        description: User registration data.
         content:
           application/json:
             schema:
-              allOf:
-                - $ref: "#/components/schemas/registerrequest"
-                - example:
-                    name: testusername
-                    email: test123@gmail.com
-                    password: Test123123
+              $ref: "#/components/schemas/RegisterRequest"
             example:
-              name: testusername
-              email: test123@gmail.com
-              password: Test123123
+              name: test
+              email: test1234@gmail.com
+              password: Test1234
         required: true
       responses:
         "200":
-          description: ""
+          description: User successfully registered.
           headers: {}
       deprecated: false
       security: []
+
   /auth/login:
     post:
       tags:
         - Auth
-      summary: login
-      operationId: login
-      parameters: []
+      summary: User Login
+      operationId: Login
+      description: Authenticates and logs in a user.
       requestBody:
-        description: ""
+        description: User login credentials.
         content:
           application/json:
             schema:
-              allOf:
-                - $ref: "#/components/schemas/loginrequest"
-                - example:
-                    email: test123@gmail.com
-                    password: Test123
+              $ref: "#/components/schemas/LoginRequest"
             example:
-              email: test123@gmail.com
-              password: Test123
+              email: testUser@test.com
+              password: secret
         required: true
       responses:
         "200":
-          description: ""
+          description: User successfully logged in.
           headers: {}
       deprecated: false
       security: []
-  /jobs:
+
+  /auth/updateUser:
     get:
       tags:
-        - Jobs
-      summary: Get all jobs
-      operationId: Getalljobs
+        - Auth
+      summary: Update User Profile
+      operationId: UpdateUser
+      description: Updates the profile information of a user.
       parameters: []
       responses:
         "200":
-          description: ""
+          description: User profile successfully updated.
+          headers: {}
+      deprecated: false
+      security:
+        - bearer: []
+
+  /jobs:
+    get:
+      tags:
+        - Job
+      summary: Get All Jobs
+      operationId: GetAllJobs
+      description: Retrieves a list of all jobs.
+      parameters: []
+      responses:
+        "200":
+          description: Successful retrieval of job list.
           headers: {}
       deprecated: false
       security:
         - bearer: []
     post:
       tags:
-        - Jobs
-      summary: Create job
-      operationId: Createjob
+        - Job
+      summary: Create Job
+      operationId: CreateJob
+      description: Creates a new job.
       parameters: []
       requestBody:
-        description: ""
+        description: Job creation data.
         content:
           application/json:
             schema:
-              allOf:
-                - $ref: "#/components/schemas/jobsrequest"
-                - example:
-                    company: traffic devils
-                    position: middle
+              $ref: "#/components/schemas/CreateJobRequest"
             example:
               company: traffic devils
               position: middle
-        required: true
       responses:
         "200":
-          description: ""
+          description: Job successfully created.
           headers: {}
       deprecated: false
       security:
         - bearer: []
-  /jobs/{id}:
-    parameters:
-      - in: path
-        name: id
-        schema:
-          type: string
-        required: true
-        description: The job ID
 
+  /jobs/{id}:
     get:
       tags:
-        - Jobs
-      summary: Get single Job
-      operationId: GetsingleJob
-      parameters: []
+        - Job
+      summary: Get Single Job
+      operationId: GetSingleJob
+      description: Retrieves details of a single job.
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: string
       responses:
         "200":
-          description: ""
+          description: Successful retrieval of job details.
           headers: {}
       deprecated: false
       security:
         - bearer: []
     patch:
       tags:
-        - Jobs
-      summary: Update job
-      operationId: Updatejob
-      parameters: []
+        - Job
+      summary: Update Job
+      operationId: UpdateJob
+      description: Updates an existing job.
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: string
       requestBody:
-        description: ""
+        description: Updated job data.
         content:
           application/json:
             schema:
-              allOf:
-                - $ref: "#/components/schemas/jobsrequest"
-                - example:
-                    company: Google
-                    position: middl1e
-                    status: interview
+              $ref: "#/components/schemas/UpdateJobRequest"
             example:
-              company: Google
-              position: middl1e
-              status: interview
-        required: true
+              company: Hamill, Gusikowski and Mayer
+              position: Sales Associate
+              status: pending
+              jobLocation: Kyiv
+              jobType: full-time
       responses:
         "200":
-          description: ""
+          description: Job successfully updated.
           headers: {}
       deprecated: false
       security:
         - bearer: []
     delete:
       tags:
-        - Jobs
-      summary: Delete job
-      operationId: Deletejob
-      parameters: []
+        - Job
+      summary: Delete Job
+      operationId: DeleteJob
+      description: Deletes a job.
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: string
       responses:
         "200":
-          description: ""
+          description: Job successfully deleted.
           headers: {}
       deprecated: false
       security:
         - bearer: []
+
+  /jobs/stats:
+    get:
+      tags:
+        - Job
+      summary: Show Stats
+      operationId: ShowStats
+      description: Retrieves statistics related to jobs.
+      parameters: []
+      responses:
+        "200":
+          description: Successful retrieval of job statistics.
+          headers: {}
+      deprecated: false
+      security:
+        - bearer: []
+
 components:
   schemas:
-    registerrequest:
-      title: Register
+    RegisterRequest:
+      title: RegisterRequest
       required:
         - name
         - email
@@ -186,10 +216,10 @@ components:
           type: string
       example:
         name: maks1
-        email: test123@gmail.com
-        password: Test123
-    loginrequest:
-      title: Login
+        email: test1234@gmail.com
+        password: Test1234
+    LoginRequest:
+      title: LoginRequest
       required:
         - email
         - password
@@ -200,10 +230,10 @@ components:
         password:
           type: string
       example:
-        email: test123@gmail.com
-        password: Test123
-    jobsrequest:
-      title: Job
+        email: test1234@gmail.com
+        password: Test1234
+    CreateJobRequest:
+      title: CreateJobRequest
       required:
         - company
         - position
@@ -216,12 +246,40 @@ components:
       example:
         company: traffic devils
         position: middle
+    UpdateJobRequest:
+      title: UpdateJobRequest
+      required:
+        - company
+        - position
+        - status
+        - jobLocation
+        - jobType
+      type: object
+      properties:
+        company:
+          type: string
+        position:
+          type: string
+        status:
+          type: string
+        jobLocation:
+          type: string
+        jobType:
+          type: string
+      example:
+        company: Hamill, Gusikowski and Mayer
+        position: Sales Associate
+        status: pending
+        jobLocation: Kyiv
+        jobType: full-time
+
   securitySchemes:
     bearer:
       type: http
       scheme: bearer
+
 security: []
+
 tags:
   - name: Auth
-  - name: Jobs
-    description: ""
+  - name: Job

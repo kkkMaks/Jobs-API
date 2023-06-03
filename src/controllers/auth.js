@@ -33,6 +33,21 @@ const login = async (req, res) => {
   });
 };
 
+const register = async (req, res) => {
+  const user = await User.create(req.body);
+  const token = user.createJWT();
+
+  return res.status(StatusCodes.CREATED).json({
+    user: {
+      name: user.name,
+      email: user.email,
+      lastName: user.lastName,
+      location: user.location,
+      token,
+    },
+  });
+};
+
 const updateUser = async (req, res) => {
   const { name, lastName, email, location } = req.body;
 
@@ -49,21 +64,6 @@ const updateUser = async (req, res) => {
   const token = user.createJWT();
 
   return res.status(StatusCodes.OK).json({
-    user: {
-      name: user.name,
-      email: user.email,
-      lastName: user.lastName,
-      location: user.location,
-      token,
-    },
-  });
-};
-
-const register = async (req, res) => {
-  const user = await User.create(req.body);
-  const token = user.createJWT();
-
-  return res.status(StatusCodes.CREATED).json({
     user: {
       name: user.name,
       email: user.email,

@@ -10,13 +10,13 @@
 			"name": "Auth",
 			"item": [
 				{
-					"name": "register",
+					"name": "Register",
 					"request": {
 						"method": "POST",
 						"header": [],
 						"body": {
 							"mode": "raw",
-							"raw": "{\n    \"name\": \"maks1\",\n    \"password\": \"Test123\"\n} ",
+							"raw": "{\n    \"name\": \"maks1\",\n    \"email\": \"test1234@gmail.com\",\n    \"password\": \"Test1234\"\n} ",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -37,7 +37,7 @@
 					"response": []
 				},
 				{
-					"name": "login",
+					"name": "Login",
 					"event": [
 						{
 							"listen": "test",
@@ -55,7 +55,7 @@
 						"header": [],
 						"body": {
 							"mode": "raw",
-							"raw": "{\n    \"email\": \"test@gmail.com\",\n    \"password\": \"Test123\"\n\n}",
+							"raw": "{\n    \"email\": \"test1234@gmail.com\",\n    \"password\": \"Test1234\"\n\n}",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -74,6 +74,36 @@
 						}
 					},
 					"response": []
+				},
+				{
+					"name": "Update User",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "GET",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"name\": \"Test\", \n    \"lastName\": \"Test\",\n    \"email\": \"test@gmail.com\",\n    \"location\": \"Kyiv\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{URL}}/auth/updateUser",
+							"host": [
+								"{{URL}}"
+							],
+							"path": [
+								"auth",
+								"updateUser"
+							]
+						}
+					},
+					"response": []
 				}
 			]
 		},
@@ -81,15 +111,41 @@
 			"name": "Job",
 			"item": [
 				{
-					"name": "jobs",
+					"name": "Get All Jobs",
 					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{accessToken}}",
+									"type": "string"
+								}
+							]
+						},
 						"method": "GET",
-						"header": []
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY0NmI1YTQ5MzZjMGQ2MDdmYjVjYTliZSIsIm5hbWUiOiJtYWtzIiwiaWF0IjoxNjg0NzU5ODgzLCJleHAiOjE2ODczNTE4ODN9._0jbVYKdqXplA7LP3WAYPpRiN8Dh-c-sJJ59_r-Op-0",
+								"type": "text",
+								"disabled": true
+							}
+						],
+						"url": {
+							"raw": "{{URL}}/jobs",
+							"host": [
+								"{{URL}}"
+							],
+							"path": [
+								"jobs"
+							]
+						}
 					},
 					"response": []
 				},
 				{
-					"name": "jobs",
+					"name": "Create Job",
 					"request": {
 						"method": "POST",
 						"header": [
@@ -121,7 +177,7 @@
 					"response": []
 				},
 				{
-					"name": "jobs:id",
+					"name": "Get Single Job",
 					"request": {
 						"auth": {
 							"type": "bearer",
@@ -155,8 +211,18 @@
 					"response": []
 				},
 				{
-					"name": "jobs:id",
+					"name": "Update Job",
 					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{accessToken}}",
+									"type": "string"
+								}
+							]
+						},
 						"method": "PATCH",
 						"header": [
 							{
@@ -167,7 +233,7 @@
 						],
 						"body": {
 							"mode": "raw",
-							"raw": "{\n    \n}",
+							"raw": "{\n    \"company\": \"Hamill, Gusikowski and Mayer\",\n    \"position\":  \"Sales Associate\",\n    \"status\": \"pending\",\n    \"jobLocation\": \"Kyiv\" ,\n    \"jobType\": \"full-time\"\n}",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -188,25 +254,28 @@
 					"response": []
 				},
 				{
-					"name": "jobs:id",
+					"name": "Show Stats",
 					"request": {
-						"method": "PATCH",
-						"header": [
-							{
-								"key": "Authorization",
-								"value": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY0NmI1YTQ5MzZjMGQ2MDdmYjVjYTliZSIsIm5hbWUiOiJtYWtzIiwiaWF0IjoxNjg0NzU5ODgzLCJleHAiOjE2ODczNTE4ODN9._0jbVYKdqXplA7LP3WAYPpRiN8Dh-c-sJJ59_r-Op-0",
-								"type": "text"
-							}
-						],
-						"body": {
-							"mode": "raw",
-							"raw": "{\n    \n}",
-							"options": {
-								"raw": {
-									"language": "json"
-								}
-							}
-						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{URL}}/jobs/stats",
+							"host": [
+								"{{URL}}"
+							],
+							"path": [
+								"jobs",
+								"stats"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "New Request",
+					"request": {
+						"method": "DELETE",
+						"header": [],
 						"url": {
 							"raw": "{{URL}}/jobs/646b7d40f7d17c91e8979137",
 							"host": [

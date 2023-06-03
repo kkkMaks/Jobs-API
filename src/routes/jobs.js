@@ -13,6 +13,6 @@ const router = express.Router();
 
 router.route("/").get(getAllJobs).post(createJob);
 router.route("/stats").get(showStats);
-router.route("/:id").get(getJob).patch(updateJob).delete(testUser, deleteJob);
+router.route("/:id").get(getJob).patch(updateJob).delete(deleteJob);
 
 module.exports = router;
