@@ -4,7 +4,7 @@
 
 Joblog is a job application tracker that allows users to keep track of their job applications. Users can create, update, and delete job listings. They can also update the status of their job applications.
 
-You can check out the live demo here [https://Joblog-zj5wu.ondigitalocean.app](https://Joblog-zj5wu.ondigitalocean.app)
+You can check out the live demo here [https://joblog-zclzm.ondigitalocean.app/](https://joblog-zclzm.ondigitalocean.app/)
 
 ## Technologies Used
 
